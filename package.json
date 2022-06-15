@@ -1,0 +1,17 @@
+{
+  "name": "messchat",
+  "version": "1.0.0",
+  "description": "Notre chat de dev",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Evans,Fadel",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "mongoose": "^6.3.8",
+    "socket.io": "^4.5.1"
+  }
+}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notre chat </title>
+</head>
+<body>
+    <h1>Chatter ici la famille</h1>
+
+    <ul id="messages"></ul>
+    <form id="form" action="">
+      <input id="input" autocomplete="off" /><button>Send</button>
+    </form>
+
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+    var socket = io();
+
+
+    const formSub = document.querySelector('#form')
+
+    formSub.addEventListener('submit',(e)=>{
+        e.preventDefault()
+        // console.log('tu as soumis bg')
+        const inputValue =document.querySelector('#input').value;
+        if(inputValue){
+            const ulToAppend = document.querySelector('#messages')
+            const newLi = document.createElement('li')
+            socket.emit('chat message', inputValue);
+        //      newLi.innerHTML = inputValue
+        // ulToAppend.append(newLi)
+
+            fetch(window.location+'message/add',{
+                headers: {
+                    'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                method: 'POST',
+                body: JSON.stringify({text: inputValue})
+            })
+            .then(res=>console.log(res))
+            .catch(err=>console.log('erreur bg'))
+        }
+       
+
+    })
+    </script>
+</body>
+</html>
