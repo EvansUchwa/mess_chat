@@ -16,23 +16,47 @@
 
 
     <script src="/socket.io/socket.io.js"></script>
+
     <script>
     var socket = io();
+    const ulToAppend = document.querySelector('#messages')
+    const formSub = document.querySelector('#form');
 
+    function getAllMessageAndAppend(){
+        fetch(window.location+'message/all',{ 
+            headers: {'Content-Type': 'application/json'}
+        })
+    .then(async res=>{
+        const data = await res.json();
+        data.forEach(element => {
+            const newLi = document.createElement('li')
+            newLi.innerHTML = element.text
+            ulToAppend.append(newLi)
+        });
+    })
+    .catch(err=>console.log('erreur de recup des messages'))
+    }
 
-    const formSub = document.querySelector('#form')
+// On recupère le ul a completés
+getAllMessageAndAppend()
 
+    // On recupère la liste des messages existant
+   socket.on('new message has set',({text})=>{
+    // alert('un nouveau message qui est '+text)
+    const newLi = document.createElement('li')
+            newLi.innerHTML = text
+            ulToAppend.append(newLi);
+   })
+
+    // On verifie si il y a eu soumission d'un formulaire
     formSub.addEventListener('submit',(e)=>{
         e.preventDefault()
-        // console.log('tu as soumis bg')
+
+        // On recuper la valeur du champ Message
         const inputValue =document.querySelector('#input').value;
         if(inputValue){
-            const ulToAppend = document.querySelector('#messages')
-            const newLi = document.createElement('li')
-            socket.emit('chat message', inputValue);
-        //      newLi.innerHTML = inputValue
-        // ulToAppend.append(newLi)
 
+            
             fetch(window.location+'message/add',{
                 headers: {
                     'Content-Type': 'application/json'
@@ -41,12 +65,14 @@
                 method: 'POST',
                 body: JSON.stringify({text: inputValue})
             })
-            .then(res=>console.log(res))
+            .then(async res=>{
+                const data = await res.json();
+                socket.emit('send message', data)
+            })
             .catch(err=>console.log('erreur bg'))
         }
-       
+    });
 
-    })
     </script>
 </body>
 </html>
