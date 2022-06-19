@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+    <title>Register</title>
+</head>
+<style>
+    .invisible {
+        display: none;
+    }
+</style>
+
+<body>
+    <div class="container pt-3">
+        <h2>Register yourself</h2>
+        <div class="alert alert-primary invisible" id="success_alert" role="alert">
+        </div>
+        <div class="alert alert-danger invisible" id="fail_alert" role="alert">
+        </div>
+        <form action="" id="register-form">
+            <input type="text" placeholder="username" id="username_input" name="username" class="form-control form-control-lg mb-3">
+            <input type="password" placeholder="password" id="password_input" name="password" class="form-control form-control-lg">
+            <div class="col-auto mt-3">
+                <button type="submit" class="btn btn-primary mb-3">Register</button>
+            </div>
+        </form>
+    </div>
+
+
+
+
+
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <script>
+        var form = document.getElementById('register-form')
+        var username_input = document.getElementById('username_input')
+        var password_input = document.getElementById('password_input')
+        var success_alert = document.getElementById('success_alert')
+        var fail_alert = document.getElementById('fail_alert')
+        form.addEventListener('submit', function(e) {
+            e.preventDefault()
+            var username = username_input.value
+            var password = password_input.value
+            fetch('/register', {
+                    headers: {
+                        'Content-Type': 'application/json'
+                            // 'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    method: 'POST',
+                    body: JSON.stringify({
+                        username: username,
+                        password: password
+                    })
+                })
+                .then(async res => {
+                    const data = await res.json()
+                    console.log(data);
+                    if (data.success) {
+                        success_alert.classList.remove('invisible')
+                        fail_alert.classList.add('invisible')
+                        success_alert.innerHTML = 'Account created successfully. <a href="/">Go home</a>'
+                    } else {
+                        fail_alert.classList.remove('invisible')
+                        success_alert.classList.add('invisible')
+                        fail_alert.innerHTML = data.message
+                    }
+                })
+                .catch(err => console.log('erreur bg'))
+        })
+    </script>
+</body>
+
+</html>
