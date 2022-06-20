@@ -6,7 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/styles/globals.css">
+    <link rel="stylesheet" href="assets/styles/auth.css">
 
     <title>Register</title>
 </head>
@@ -18,19 +19,25 @@
 
 
 <body>
-    <div class="container pt-3">
-        <h2>Login yourself</h2>
-        <div class="alert alert-primary invisible" id="success_alert" role="alert">
-        </div>
-        <div class="alert alert-danger invisible" id="fail_alert" role="alert">
-        </div>
-        <form action="" id="login-form">
-            <input type="text" placeholder="username" id="username_input" name="username" class="form-control form-control-lg mb-3">
-            <input type="password" placeholder="password" id="password_input" name="password" class="form-control form-control-lg">
-            <div class="col-auto mt-3">
-                <button type="submit" class="btn btn-primary mb-3">Login</button>
+    <div class="authContainer">
+        <section>
+            <h2>Login yourself</h2>
+            <div class="alert alert-primary invisible" id="success_alert" role="alert">
             </div>
-        </form>
+            <div class="alert alert-danger invisible" id="fail_alert" role="alert">
+            </div>
+            <form action="" id="login-form">
+                <div class="formField">
+                    <input type="text" placeholder="username" id="username_input" name="username" class="">
+                </div>
+                <div class="formField">
+                    <input type="password" placeholder="password" id="password_input" name="password" class="">
+                </div>
+                <div class="formBtn">
+                    <button type=" submit " class="btn btn-primary mb-3 ">Login</button>
+                </div>
+            </form>
+        </section>
     </div>
 
 
@@ -38,7 +45,7 @@
 
 
     <!-- JavaScript Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js " integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2 " crossorigin="anonymous "></script>
     <script>
         var form = document.getElementById('login-form')
         var username_input = document.getElementById('username_input')
@@ -65,9 +72,10 @@
                     const data = await res.json()
                     console.log(data);
                     if (data.success) {
-                        success_alert.classList.remove('invisible')
-                        fail_alert.classList.add('invisible')
-                        success_alert.innerHTML = 'You logged in successfully! <a href="/">Go home</a>'
+                        window.location = '/'
+                            /*    success_alert.classList.remove('invisible')
+                                fail_alert.classList.add('invisible')
+                                success_alert.innerHTML = 'You logged in successfully! <a href="/ ">Go home</a>'*/
                     } else {
                         fail_alert.classList.remove('invisible')
                         success_alert.classList.add('invisible')

@@ -26,7 +26,7 @@ router.get('/login', function(req, res) {
 router.post('/register', async function(req, res) {
     var { username, password } = req.body
 
-    var alreadyUser = await User.find({ username: username })
+    var alreadyUser = await User.find({ username })
 
     if (alreadyUser.length === 0) {
         var hash = await bcrypt.hash(password, parseInt(process.env.SALT_ROUNDS));
@@ -38,7 +38,7 @@ router.post('/register', async function(req, res) {
 
         await user.save()
 
-        req.session.connect = { success: true, connected: true, user: user }
+        req.session.connect = { success: true, connected: true, user }
 
         res.status(200).json(req.session.connect)
     } else {
@@ -71,6 +71,11 @@ router.post('/login', async function(req, res) {
         req.session.connect = { connected: false }
         res.status(500).json({ success: false, message: 'Informations does not match' })
     }
+})
+
+router.get('/logout', function(req, res) {
+    req.session.connect = false
+    res.redirect('/login')
 })
 
 

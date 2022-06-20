@@ -1,0 +1,26 @@
+.authContainer {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.authContainer section {
+    width: 50%;
+    background-color: #ededed;
+}
+
+.authContainer section h2 {
+    text-align: center;
+}
+
+.authContainer section form {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.formBtn {
+    width: 100%;
+    text-align: center;
+}

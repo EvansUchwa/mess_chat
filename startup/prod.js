@@ -6,6 +6,7 @@ require('dotenv').config();
 
 module.exports = function(app) {
     app.use(cors());
+    app.use(express.static('public'));
     app.use(express.json());
     app.use(bodyParser.urlencoded({ extended: false }))
     app.use(bodyParser.json())
