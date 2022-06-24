@@ -8,6 +8,8 @@ const io = new Server(server);
 const mongoose = require('mongoose')
 const Message = require('./models/Message')
 const axios = require('axios')
+const { initializeApp } = require("firebase/app");
+
 require('dotenv').config();
 
 
@@ -49,7 +51,7 @@ app.use('/message', require('./routes/message.js'))
 
 
 
-server.listen(finalPort, (error) => {
+server.listen(8085, (error) => {
     if (error) {
         return console.log('une erreur est survenue bg')
     }
